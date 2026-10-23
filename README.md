@@ -78,3 +78,34 @@ Remove-ADGroupMember -Identity "ACL-Reparto" -Members "rparrales" -Confirm:$fals
 ```
 ![Parrales pescaderia AD](03_ParralesPescaderia.png)
 ![Parrales pescaderia ID](04_ParralesPescaderiaID.png)
+
+## Fase 3: Leaver — Baja, Revocación de Accesos y Principio Zero Trust
+
+### 1. Justificación de Seguridad y Gestión del Riesgo
+La desvinculación de un empleado representa una de las fases más críticas en el ciclo de vida de la identidad (JML). Una ejecución deficiente da lugar a **cuentas huérfanas o cuentas zombi** (*dormant/zombie accounts*), las cuales constituyen vectores de ataque primarios para intrusiones persistentes o amenazas internas.
+
+Bajo los principios de **Zero Trust** (*«Asumir la brecha»* y *«Verificación explícita»*), el proceso de baja corporativa no elimina destructivamente el objeto de forma inmediata, sino que ejecuta una revocación total y contención en cuarentena:
+1. **Revocación inmediata de autenticación:** Inhabilitación de la cuenta en el origen de identidad autoritativo para revocar sesiones y bloquear futuros inicios de sesión.
+2. **Revocación estricta de privilegios (RBAC):** Retirada de todas las membresías a grupos de seguridad departamentales (`ACL-Pescaderia`).
+3. **Aislamiento en OU de cuarentena:** Traslado del objeto a `OU=Bajas` para evitar la aplicación de directivas de grupo operativas (GPOs) y mantener trazabilidad para auditorías forenses y cumplimiento normativo.
+
+### 2. Implementación en PowerShell (AD DS)
+Se ejecutó el procedimiento de desaprovisionamiento y aislamiento:
+
+```powershell
+# 1. Bloquear inmediatamente la autenticacion
+Disable-ADAccount -Identity "rparrales"
+
+# 2. Revocar pertenencia al rol de seguridad departamental
+Remove-ADGroupMember -Identity "ACL-Pescaderia" -Members "rparrales" -Confirm:$false
+
+# 3. Trasladar el objeto a la OU de cuarentena/bajas para auditoria
+Move-ADObject -Identity "CN=Rosario Parrales,OU=Pescaderia,OU=Mariscos_Recio,DC=montepinar,DC=local" `
+              -TargetPath "OU=Bajas,OU=Mariscos_Recio,DC=montepinar,DC=local"
+
+# 4. Registrar metadatos de auditoria interna
+Set-ADUser -Identity "rparrales" -Description "Baja efectiva - Bloqueado por auditoria IAM"
+```
+
+![Parrales deja la empresa AD](05_ParralesADLeaver.png)
+![Parrales deja la empresa ID](06_ParralesIDLeaver.png)
