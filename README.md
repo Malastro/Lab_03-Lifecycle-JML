@@ -76,5 +76,5 @@ Add-ADGroupMember -Identity "ACL-Pescaderia" -Members "rparrales"
 # 4. Revocación del rol previo (Mitigación de Privilege Creep)
 Remove-ADGroupMember -Identity "ACL-Reparto" -Members "rparrales" -Confirm:$false
 ```
-[Parrales pescaderia AD](03_ParralesPescaderia.png)
-[Parrales pescaderia ID](04_ParralesPescaderiaID.png)
+![Parrales pescaderia AD](03_ParralesPescaderia.png)
+![Parrales pescaderia ID](04_ParralesPescaderiaID.png)
