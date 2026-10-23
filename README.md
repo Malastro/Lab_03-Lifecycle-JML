@@ -44,3 +44,8 @@ $userParams = @{
 # Creación de usuario y asignación a rol RBAC
 New-ADUser @userParams
 Add-ADGroupMember -Identity "ACL-Reparto" -Members "rparrales"
+```
+
+![Parrales en AD](01_ParralesAD.png)
+![Parrales en Entra ID](02_ParralesEntraID.png)
+
