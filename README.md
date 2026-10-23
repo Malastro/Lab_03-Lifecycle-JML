@@ -49,3 +49,32 @@ Add-ADGroupMember -Identity "ACL-Reparto" -Members "rparrales"
 ![Parrales en AD](01_ParralesAD.png)
 ![Parrales en Entra ID](02_ParralesEntraID.png)
 
+## Fase 2: Mover — Transición de Rol y Mitigación de Privilege Creep
+
+### 1. Justificación Técnica y Principio de Menor Privilegio
+En la gestión del ciclo de vida de la identidad (JML), la fase de movilidad interna representa uno de los vectores críticos de riesgo en auditorías de seguridad e IAM: el **Privilege Creep** (acumulación residual de permisos). 
+
+Cuando un empleado cambia de departamento o función laboral (en este caso, la promoción de Rosario Parrales de *Reparto* a *Pescadería*), el modelo RBAC exige:
+1. Reubicar el objeto en su contexto jerárquico dentro del directorio.
+2. Otorgar los nuevos accesos operativos correspondientes a su nueva labor.
+3. **Revocar de forma explícita e inmediata** los grupos de seguridad del rol anterior, evitando que conserve privilegios innecesarios sobre recursos a los que ya no debe acceder.
+
+### 2. Implementación en PowerShell (AD DS)
+Se ejecutó un procedimiento desacoplado para modificar la ubicación organizativa, actualizar los metadatos corporativos y reasignar los grupos de seguridad:
+
+```powershell
+# 1. Mover el objeto a su nueva OU mediante su Distinguished Name (DN)
+Move-ADObject -Identity "CN=Rosario Parrales,OU=Reparto,OU=Mariscos_Recio,DC=montepinar,DC=local" `
+              -TargetPath "OU=Pescaderia,OU=Mariscos_Recio,DC=montepinar,DC=local"
+
+# 2. Actualizar metadatos de puesto y departamento
+Set-ADUser -Identity "rparrales" -Department "Pescaderia" -Title "Pescadero"
+
+# 3. Asignación del nuevo rol RBAC
+Add-ADGroupMember -Identity "ACL-Pescaderia" -Members "rparrales"
+
+# 4. Revocación del rol previo (Mitigación de Privilege Creep)
+Remove-ADGroupMember -Identity "ACL-Reparto" -Members "rparrales" -Confirm:$false
+```
+[Parrales pescaderia AD](03_ParralesPescaderia.png)
+[Parrales pescaderia ID](04_ParralesPescaderiaID.png)
