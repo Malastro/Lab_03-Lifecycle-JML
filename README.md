@@ -2,13 +2,27 @@
 
 ### 1. Descripción del proyecto
    
-Enrique Pastor (Concejal de Juventud y Tiempo Libre y Secretario/Administrador en funciones) advierte a la junta que la gestión de personal no puede ser un caos de favores personales ni gritos de "¡Quedas despedido!". Exige formalizar un protocolo técnico de Recursos Humanos sincronizado con el directorio:
+En el marco de la modernización corporativa de Mariscos Recio S.L., la dirección ejecutiva encabezada por Antonio Recio (Mayorista no limpia pescado) constata que la administración de personal ya no puede gestionarse de manera informal ni resolverse a base de arbitrariedades operativas y despidos a viva voz.
 
-- Joiner (Alta / Nuevo empleado): Contratación formal de Coque Calatrava como jardinero/portero o incorporación de un nuevo empleado en Mariscos Recio. Aprovisionamiento automatizado de cuenta, correo corporativo, atributos de puesto y grupos base.
+Para garantizar el cumplimiento normativo, la trazabilidad en auditorías de seguridad y la mitigación de vectores de ataque internos, se formaliza un protocolo técnico de Identidad y Gestión de Accesos (IAM) basado en el ciclo de vida JML (Joiner, Mover, Leaver), sincronizado de forma híbrida entre el Directorio Activo local (AD DS) y la nube (Microsoft Entra ID):
 
-- Mover (Movilidad / Cambio de puesto): Reclasificación interna. Por ejemplo, ascenso o traslado de departamento (Coque pasa de jardinero a consejere). Debe asignarse el nuevo rol y revocarse estrictamente el acceso anterior para evitar Privilege Creep.
+### Joiner (Alta e Incorporación Corporativa):
 
-- Leaver (Baja / Adiós a la empresa): Cese inmediato de funciones. Bloqueo de cuenta en Active Directory, traslado a OU de archivo, forzado de sincronización hacia la nube y revocación inmediata de tokens de sesión activos (Continuous Access Evaluation / Revoke Sign-in Sessions) para expulsar al usuario de todos sus dispositivos al instante.
+Escenario: Contratación formal de Rosario Parrales como personal de la empresa asignado inicialmente al departamento de transporte.
+
+Operativa técnica: Aprovisionamiento estructurado de la cuenta (rparrales), definición de atributos corporativos estandarizados (Title: Repartidor, Department: Reparto), asignación en la unidad organizativa de clasificación (OU=Reparto) y entrega de permisos mediante el rol base de seguridad (ACL-Reparto) bajo un modelo RBAC.
+
+### Mover (Movilidad Interna y Transición de Rol):
+
+Escenario: Reclasificación laboral y promoción de Rosario Parrales, pasando de repartidor a responsable de mostrador (Pescadero).
+
+Operativa técnica: Reubicación jerárquica del objeto hacia la carpeta departamental (OU=Pescaderia), actualización de metadatos laborales y reasignación de privilegios operativos (ACL-Pescaderia). Se aplica una política estricta de mitigación de Privilege Creep revocando de inmediato la pertenencia a ACL-Reparto para impedir la acumulación residual de permisos no requeridos.
+
+### Leaver (Cese de Funciones y Contención Zero Trust):
+
+Escenario: Extinción del contrato laboral y desvinculación inmediata del empleado de la compañía.
+
+Operativa técnica: Ejecución del protocolo defensivo bajo el principio Zero Trust («Asumir la brecha» y «Acceso mínimo indispensable»). Bloqueo instantáneo de la autenticación (Disable-ADAccount), revocación total de pertenencia a grupos de seguridad departamentales, aislamiento del objeto en la unidad de cuarentena (OU=Bajas) y forzado de sincronización delta hacia Microsoft Entra ID (Cuenta habilitada: No) para invalidar el acceso federado o directo a cualquier recurso corporativo local o en la nube.
 
 ### 2. Fases de implementación
 
@@ -109,3 +123,10 @@ Set-ADUser -Identity "rparrales" -Description "Baja efectiva - Bloqueado por aud
 
 ![Parrales deja la empresa AD](05_ParralesADLeaver.png)
 ![Parrales deja la empresa ID](06_ParralesIDLeaver.png)
+
+## 3. Conclusiones y Competencias Demostradas
+
+1. **Gobernanza de Identidades Híbridas:** Despliegue y configuración del conector Microsoft Entra Connect, controlando el filtrado de Unidades Organizativas (OUs) autoritativas y forzando ciclos de sincronización delta mediante PowerShell.
+2. **Implementación Estricta de RBAC:** Desacoplamiento entre la estructura jerárquica del directorio (OUs para categorización y políticas) y los grupos de seguridad globales para asignación granular de privilegios.
+3. **Mitigación Activa de Privilege Creep:** Demostración práctica de cómo un proceso de movilidad interna (Mover) debe incluir la revocación inmediata de pertenencia a grupos departamentales anteriores.
+4. **Postura Zero Trust en Procesos de Salida (Leaver):** Aislamiento en OU de cuarentena, revocación completa de membresías y bloqueo de credenciales sincronizado inmediatamente con la nube para neutralizar el riesgo de cuentas huérfanas (*dormant accounts*).
