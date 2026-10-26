@@ -1,4 +1,4 @@
-# Lab_03 Ciclo de vida (JML) - Mariscos Recio y Rosario Parrales
+# Lab_03: Ciclo de vida (JML) - Mariscos Recio y Rosario Parrales
 
 ### 1. Descripción del proyecto
 En el marco de la modernización corporativa de Mariscos Recio S.L., la dirección ejecutiva encabezada por Antonio Recio (Mayorista no limpia pescado) decide que la gestión del personal ya no puede depender de procedimientos improvisados, cambios de puesto sin control ni despidos comunicados a viva voz.
