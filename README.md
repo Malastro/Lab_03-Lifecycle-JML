@@ -78,8 +78,9 @@ La contraseña temporal se introduce de forma interactiva para evitar incluirla 
 
 3. Validación del alta
 
-![Parrales en AD](01_ParralesAD.png)
-![Parrales en Entra ID](02_ParralesEntraID.png)
+![Parrales en AD](screenshots/01_ParralesAD.png)
+
+![Parrales en Entra ID](screenshots/02_ParralesEntraID.png)
 
 ## Fase 2: Mover — Transición de Rol y Mitigación de Privilege Creep
 
@@ -116,8 +117,9 @@ El procedimiento actualiza la ubicación organizativa y los atributos de Rosario
 
 ### Validación del cambio de puesto
 
-![Parrales pescaderia AD](03_ParralesPescaderia.png)
-![Parrales pescaderia ID](04_ParralesPescaderiaID.png)
+![Parrales pescaderia AD](screenshots/03_ParralesPescaderia.png)
+
+![Parrales pescaderia ID](screenshots/04_ParralesPescaderiaID.png)
 
 ## Fase 3: Leaver — Baja, Revocación de Accesos y Principio Zero Trust
 
@@ -156,9 +158,9 @@ Asimismo, antes de trasladar el objeto a OU=Bajas, debe verificarse que esta OU 
 
 Resultado esperado: la cuenta de origen queda deshabilitada y se retiran los accesos departamentales previstos. El estado final en Entra ID debe comprobarse tras la sincronización; no se presupone que el cambio sea instantáneo ni que el bloqueo de la cuenta revoque por sí solo todas las sesiones ya emitidas.
 
-![Parrales deja la empresa AD](05_ParralesADLeaver.png)
+![Parrales deja la empresa AD](v05_ParralesADLeaver.png)
 
-![Parrales deja la empresa ID](06_ParralesIDLeaver.png)
+![Parrales deja la empresa ID](screenshots/06_ParralesIDLeaver.png)
 
 
 
