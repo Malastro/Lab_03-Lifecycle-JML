@@ -154,10 +154,13 @@ Asimismo, antes de trasladar el objeto a OU=Bajas, debe verificarse que esta OU 
 
 ### 3. Validación de la baja
 
+Resultado esperado: la cuenta de origen queda deshabilitada y se retiran los accesos departamentales previstos. El estado final en Entra ID debe comprobarse tras la sincronización; no se presupone que el cambio sea instantáneo ni que el bloqueo de la cuenta revoque por sí solo todas las sesiones ya emitidas.
+
 ![Parrales deja la empresa AD](05_ParralesADLeaver.png)
+
 ![Parrales deja la empresa ID](06_ParralesIDLeaver.png)
 
-Resultado esperado: la cuenta de origen queda deshabilitada y se retiran los accesos departamentales previstos. El estado final en Entra ID debe comprobarse tras la sincronización; no se presupone que el cambio sea instantáneo ni que el bloqueo de la cuenta revoque por sí solo todas las sesiones ya emitidas.
+
 
 ## 4. Conclusiones y Competencias Demostradas
 
