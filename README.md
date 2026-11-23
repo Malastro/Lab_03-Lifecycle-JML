@@ -169,7 +169,7 @@ Resultado esperado: la cuenta de origen queda deshabilitada y se retiran los acc
 1. **Gobernanza de Identidades Híbridas:** Despliegue y configuración del conector Microsoft Entra Connect, controlando el filtrado de Unidades Organizativas (OUs) autoritativas y forzando ciclos de sincronización delta mediante PowerShell.
 2. **Implementación Estricta de RBAC:** Desacoplamiento entre la estructura jerárquica del directorio (OUs para categorización y políticas) y los grupos de seguridad globales para asignación granular de privilegios.
 3. **Mitigación Activa de Privilege Creep:** Demostración práctica de cómo un proceso de movilidad interna (Mover) debe incluir la revocación inmediata de pertenencia a grupos departamentales anteriores.
-4. **Postura Zero Trust en Procesos de Salida (Leaver):** Aislamiento en OU de cuarentena, revocación completa de membresías y bloqueo de credenciales sincronizado inmediatamente con la nube para neutralizar el riesgo de cuentas huérfanas (*dormant accounts*).ç
+4. **Postura Zero Trust en Procesos de Salida (Leaver):** Aislamiento en OU de cuarentena, revocación completa de membresías y bloqueo de credenciales sincronizado inmediatamente con la nube para neutralizar el riesgo de cuentas huérfanas (*dormant accounts*).
 
 ## 5. Posibles mejoras futuras
 
